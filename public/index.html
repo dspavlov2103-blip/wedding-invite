@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Приглашение на свадьбу — 12 сентября 2026, Вилла Романов" />
+    <title>Приглашение на свадьбу · 12.09.2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Marck+Script&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero" id="top">
+        <p class="hero__label">приглашение на свадьбу</p>
+
+        <div class="frame">
+          <div class="frame__peonies" aria-hidden="true">
+            <svg class="peony" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="28" r="10" fill="#f5e8ea" stroke="#a67b85" stroke-width="1.2"/>
+              <circle cx="24" cy="32" r="9" fill="#fff" stroke="#c9a0a8" stroke-width="1.2"/>
+              <circle cx="40" cy="32" r="9" fill="#fff" stroke="#c9a0a8" stroke-width="1.2"/>
+              <circle cx="32" cy="36" r="8" fill="#f5e8ea" stroke="#a67b85" stroke-width="1"/>
+              <path d="M32 44v14" stroke="#3d6b5e" stroke-width="2" stroke-linecap="round"/>
+              <path d="M28 50h8" stroke="#3d6b5e" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+            <svg class="peony" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="28" r="10" fill="#e8f0ec" stroke="#3d6b5e" stroke-width="1.2"/>
+              <circle cx="24" cy="32" r="9" fill="#fff" stroke="#3d6b5e" stroke-width="1.2"/>
+              <circle cx="40" cy="32" r="9" fill="#fff" stroke="#3d6b5e" stroke-width="1.2"/>
+              <circle cx="32" cy="36" r="8" fill="#f5e8ea" stroke="#c9a0a8" stroke-width="1"/>
+              <path d="M32 44v14" stroke="#3d6b5e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <svg class="peony" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="32" cy="28" r="10" fill="#f5e8ea" stroke="#a67b85" stroke-width="1.2"/>
+              <circle cx="24" cy="32" r="9" fill="#fff" stroke="#c9a0a8" stroke-width="1.2"/>
+              <circle cx="40" cy="32" r="9" fill="#fff" stroke="#c9a0a8" stroke-width="1.2"/>
+              <path d="M32 44v14" stroke="#3d6b5e" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h1 class="frame__names" id="couple-names">Имя<br />и<br />Имя</h1>
+          <p class="frame__date">12 · 09 · 2026</p>
+        </div>
+
+        <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
+          </svg>
+          <span id="music-label">Включить музыку</span>
+        </button>
+        <audio id="bg-music" loop preload="metadata">
+          <source src="/audio/na-beregu-neba-instrumental.mp3" type="audio/mpeg" />
+        </audio>
+      </header>
+
+      <section class="section greeting">
+        <h2 class="section__title section__title--script">Дорогие наши</h2>
+        <p><strong>самые близкие люди!</strong></p>
+        <p>
+          Мы решили, что в этот день рядом должны быть только вы. Только те, кто действительно дорог нашим душам.
+        </p>
+        <p>
+          Приходите разделить с нами этот уютный, немного трогательный и очень радостный день.
+          Будет вкусно, душевно и весело.
+        </p>
+        <p>
+          Будет море, вино, объятия и зажигательные танцы — куда без них.
+        </p>
+      </section>
+
+      <section class="section section--striped" id="when-where">
+        <h2 class="section__title">Когда и где</h2>
+        <div class="info-card">
+          <h3>Когда</h3>
+          <p>12 сентября 2026 года</p>
+        </div>
+        <div class="info-card">
+          <h3>Где</h3>
+          <p><strong>Вилла Романов</strong></p>
+          <p>Темрюкский район, ст. Голубицкая, ул. Красная, 260</p>
+          <a
+            class="btn"
+            href="https://yandex.ru/maps/?text=Вилла+Романов+Голубицкая+ул+Красная+260"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Маршрут</a>
+        </div>
+        <img
+          class="venue-photo"
+          src="/assets/venue-interior.png"
+          alt="Интерьер ресторана Вилла Романов"
+          width="800"
+          height="600"
+        />
+      </section>
+
+      <section class="section" id="program">
+        <h2 class="section__title">Программа</h2>
+        <ol class="timeline">
+          <li>
+            <span class="timeline__time">15:30</span>
+            <h4>Сбор гостей</h4>
+            <p>Приезжайте пораньше, чтобы успеть обняться, взять бокал и занять место с лучшим видом.</p>
+          </li>
+          <li>
+            <span class="timeline__time">16:00</span>
+            <h4>Церемония</h4>
+            <p>Самое важное. Будет трогательно. Платки приготовьте — это не шутка.</p>
+          </li>
+          <li>
+            <span class="timeline__time">17:00</span>
+            <h4>Банкет</h4>
+            <p>Теперь можно и за столы. Едим, пьём, зажигаем!</p>
+          </li>
+          <li>
+            <span class="timeline__time">22:00</span>
+            <h4>Торт</h4>
+            <p>
+              Сладкий финал, но только для десерта. Самое время поднять бокал, обнять друг друга и проводить нас под аплодисменты. Дальше — танцы для вас.
+            </p>
+          </li>
+          <li>
+            <span class="timeline__time">23:00</span>
+            <h4>Завершение</h4>
+            <p>
+              Даже такая вечеринка может закончиться. Спасибо, что были с нами в этот день.
+            </p>
+          </li>
+        </ol>
+      </section>
+
+      <section class="section section--striped" id="dresscode">
+        <h2 class="section__title">Дресс-код</h2>
+        <p>
+          Никаких строгих правил: приходите в том, в чём чувствуете себя красиво и празднично. Единственное, что мы просим — захватите с собой улыбку.
+        </p>
+      </section>
+
+      <section class="section" id="flowers">
+        <h2 class="section__title">Цветы</h2>
+        <p>
+          Самое ценное для нас — это ваше присутствие в этот день. А если хочется порадовать ещё больше, приятным комплиментом будут цветы или бутылочка хорошего вина для нашей семейной винотеки.
+        </p>
+      </section>
+
+      <section class="section section--striped" id="telegram">
+        <h2 class="section__title">Чат для гостей</h2>
+        <p>
+          Мы создали группу в Telegram, куда можно будет добавлять фото и видео с нашей свадьбы, чтобы обменяться лучшими моментами.
+        </p>
+        <a class="btn" id="telegram-link" href="#" target="_blank" rel="noopener noreferrer">Вступить в чат</a>
+        <p class="form__hint" id="telegram-hint">Ссылку на чат добавим перед публикацией.</p>
+      </section>
+
+      <section class="section" id="countdown-block">
+        <h2 class="section__title">До свадьбы осталось</h2>
+        <div class="countdown" id="countdown" aria-live="polite"></div>
+      </section>
+
+      <section class="section section--striped" id="anketa">
+        <h2 class="section__title">Анкета гостя</h2>
+        <p class="form__hint">Заполните, пожалуйста, для каждого гостя отдельно.</p>
+
+        <form class="form" id="guest-form" novalidate>
+          <label for="fullName">Имя и фамилия</label>
+          <input type="text" id="fullName" name="fullName" required autocomplete="name" />
+
+          <label>1. Буду ли я присутствовать</label>
+          <div class="radio-group">
+            <label>
+              <input type="radio" name="attending" value="Да, конечно, ничего не пропущу!" required />
+              Да, конечно, ничего не пропущу!
+            </label>
+            <label>
+              <input type="radio" name="attending" value="Нет, к сожалению, но буду с вами сердцем" />
+              Нет, к сожалению, но буду с вами сердцем
+            </label>
+          </div>
+
+          <label for="companions">2. С кем планирую прибыть</label>
+          <input type="text" id="companions" name="companions" placeholder="Например: один/одна, с парой, с детьми…" />
+
+          <label>3. Что мне лучше налить?</label>
+          <div class="checkbox-group">
+            <label><input type="checkbox" name="drinks" value="Вино белое" /> Вино белое</label>
+            <label><input type="checkbox" name="drinks" value="Вино красное" /> Вино красное</label>
+            <label><input type="checkbox" name="drinks" value="Игристое" /> Игристое</label>
+            <label><input type="checkbox" name="drinks" value="Виски" /> Виски</label>
+            <label><input type="checkbox" name="drinks" value="Водка" /> Водка</label>
+            <label><input type="checkbox" name="drinks" value="Безалкогольные напитки" /> Безалкогольные напитки</label>
+          </div>
+
+          <label for="message">4. Хочу сказать пару слов молодожёнам</label>
+          <textarea id="message" name="message" placeholder="По желанию"></textarea>
+
+          <button type="submit" class="btn form__submit">Отправить</button>
+          <div class="form__success" id="form-success" role="status">
+            Спасибо! Ваш ответ сохранён. До встречи на празднике!
+          </div>
+          <div class="form__error" id="form-error" role="alert"></div>
+        </form>
+      </section>
+
+      <section class="section" id="logistics">
+        <h2 class="section__title">Как добраться</h2>
+        <p>
+          Отправной точкой и для размещения мы выбрали село <strong>Витязево</strong> (Анапа). Оттуда будет удобный трансфер до места свадьбы и обратно. Если нужно — напишите нам, и мы поможем сориентироваться.
+        </p>
+      </section>
+
+      <section class="section section--striped" id="host">
+        <h2 class="section__title">Ведущий</h2>
+        <p>
+          Хотите нас удивить или просто сверить часы? Наш ведущий <strong>Рэм</strong> знает всё про тайминг и с радостью поможет с организацией вашей идеи, не стесняйтесь.
+        </p>
+        <div class="contact-card">
+          <p>Рэм</p>
+          <a href="tel:+79282733424">+7 (928) 273-34-24</a>
+        </div>
+      </section>
+
+      <footer class="footer">До встречи!</footer>
+    </div>
+
+    <script src="/js/config.js"></script>
+    <script src="/js/main.js"></script>
+  </body>
+</html>

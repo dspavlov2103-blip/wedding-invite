@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ответы гостей — админ</title>
+    <link rel="stylesheet" href="/css/style.css" />
+    <style>
+      body { max-width: 960px; margin: 0 auto; padding: 1.5rem; }
+      table { width: 100%; border-collapse: collapse; font-size: 0.9rem; background: #fff; }
+      th, td { border: 1px solid #ddd; padding: 0.5rem; text-align: left; vertical-align: top; }
+      th { background: var(--green-soft); }
+      .login { max-width: 320px; margin: 4rem auto; }
+      .toolbar { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1rem; }
+      #admin-app { display: none; }
+    </style>
+  </head>
+  <body>
+    <div class="login" id="login-panel">
+      <h1>Ответы гостей</h1>
+      <p>Введите пароль администратора (по умолчанию <code>svadba2026</code>).</p>
+      <label for="pwd">Пароль</label>
+      <input type="password" id="pwd" style="width:100%;padding:0.5rem;margin:0.5rem 0 1rem" />
+      <button type="button" class="btn" id="login-btn">Войти</button>
+      <p class="form__error" id="login-error"></p>
+    </div>
+
+    <div id="admin-app">
+      <div class="toolbar">
+        <button type="button" class="btn" id="refresh-btn">Обновить</button>
+        <button type="button" class="btn btn--outline" id="export-btn">Скачать CSV</button>
+        <span id="count-label"></span>
+      </div>
+      <div style="overflow-x:auto">
+        <table>
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Дата</th>
+              <th>Имя</th>
+              <th>Присутствие</th>
+              <th>С кем</th>
+              <th>Напитки</th>
+              <th>Сообщение</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <script>
+      let token = sessionStorage.getItem("adminToken") || "";
+      const loginPanel = document.getElementById("login-panel");
+      const adminApp = document.getElementById("admin-app");
+      const rowsEl = document.getElementById("rows");
+      const countLabel = document.getElementById("count-label");
+      let lastRows = [];
+
+      document.getElementById("login-btn").onclick = async () => {
+        token = document.getElementById("pwd").value;
+        const ok = await loadRows();
+        if (ok) {
+          sessionStorage.setItem("adminToken", token);
+          loginPanel.style.display = "none";
+          adminApp.style.display = "block";
+        } else {
+          document.getElementById("login-error").textContent = "Неверный пароль";
+          document.getElementById("login-error").classList.add("visible");
+        }
+      };
+
+      document.getElementById("refresh-btn").onclick = loadRows;
+
+      document.getElementById("export-btn").onclick = () => {
+        if (!lastRows.length) return;
+        const header = ["id", "created_at", "full_name", "attending", "companions", "drinks", "message"];
+        const lines = [header.join(";")];
+        lastRows.forEach((r) => {
+          lines.push(
+            [
+              r.id,
+              r.created_at,
+              r.full_name,
+              r.attending,
+              r.companions || "",
+              (r.drinks || []).join(", "),
+              (r.message || "").replace(/;/g, ","),
+            ]
+              .map((c) => `"${String(c).replace(/"/g, '""')}"`)
+              .join(";")
+          );
+        });
+        const blob = new Blob(["\uFEFF" + lines.join("\n")], { type: "text/csv;charset=utf-8" });
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "ankety-gostey.csv";
+        a.click();
+      };
+
+      async function loadRows() {
+        const res = await fetch("/api/responses", {
+          headers: { Authorization: "Bearer " + token },
+        });
+        if (!res.ok) return false;
+        const data = await res.json();
+        lastRows = data.rows || [];
+        countLabel.textContent = "Всего ответов: " + lastRows.length;
+        rowsEl.innerHTML = lastRows
+          .map(
+            (r) => `<tr>
+              <td>${r.id}</td>
+              <td>${r.created_at}</td>
+              <td>${esc(r.full_name)}</td>
+              <td>${esc(r.attending)}</td>
+              <td>${esc(r.companions || "—")}</td>
+              <td>${esc((r.drinks || []).join(", "))}</td>
+              <td>${esc(r.message || "—")}</td>
+            </tr>`
+          )
+          .join("");
+        return true;
+      }
+
+      function esc(s) {
+        const d = document.createElement("div");
+        d.textContent = s;
+        return d.innerHTML;
+      }
+
+      if (token) {
+        loadRows().then((ok) => {
+          if (ok) {
+            loginPanel.style.display = "none";
+            adminApp.style.display = "block";
+          }
+        });
+      }
+    </script>
+  </body>
+</html>
