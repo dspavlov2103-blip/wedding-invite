@@ -1,13 +1,13 @@
 :root {
-  --cream: #fffdf7;
+  --cream: #fffaf2;
   --white: #ffffff;
-  --pink: #c9a0a8;
-  --pink-deep: #a67b85;
-  --green: #3d6b5e;
-  --green-deep: #2d5248;
-  --green-soft: #e8f0ec;
-  --pink-soft: #f5e8ea;
-  --text: #3a4540;
+  --pink: #dc8ea0;
+  --pink-deep: #bf5f79;
+  --green: #2f8a6f;
+  --green-deep: #1f5f4b;
+  --green-soft: #dbefe7;
+  --pink-soft: #ffe2e8;
+  --text: #2f3d37;
   --gold: #b8956a;
   --shadow: rgba(45, 82, 72, 0.12);
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
@@ -74,36 +74,36 @@ a {
 .frame {
   position: relative;
   margin: 0 auto 1.25rem;
-  padding: 2rem 1.5rem 1.75rem;
+  padding: 2.3rem 1.5rem 2rem;
   max-width: 320px;
   background: var(--white);
-  border: 2px solid var(--green);
-  border-radius: 4px;
-  box-shadow: 8px 8px 0 var(--shadow);
+  border: 2px solid var(--green-deep);
+  border-radius: 42px 42px 20px 20px / 34px 34px 20px 20px;
+  box-shadow: 0 12px 30px var(--shadow);
+  outline: 2px solid rgba(191, 95, 121, 0.32);
+  outline-offset: -10px;
 }
 
 .frame::before,
 .frame::after {
   content: "";
   position: absolute;
-  width: 48px;
-  height: 48px;
-  border: 2px solid var(--green);
-  opacity: 0.35;
+  width: 56px;
+  height: 56px;
+  border: 2px solid var(--pink-deep);
+  opacity: 0.5;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
 }
 
 .frame::before {
-  top: -8px;
-  left: -8px;
-  border-right: none;
-  border-bottom: none;
+  top: 16px;
+  left: 12px;
 }
 
 .frame::after {
-  bottom: -8px;
-  right: -8px;
-  border-left: none;
-  border-top: none;
+  bottom: 16px;
+  right: 12px;
 }
 
 .frame__peonies {
@@ -124,10 +124,10 @@ a {
 
 .frame__date {
   margin: 1rem 0 0;
-  font-size: 1.35rem;
-  font-weight: 600;
+  font-size: clamp(1.55rem, 6.2vw, 2.15rem);
+  font-weight: 700;
   color: var(--pink-deep);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.15em;
 }
 
 .music-toggle {
@@ -186,12 +186,13 @@ a {
 
 .section__title--script {
   font-family: var(--font-script);
-  font-size: 2rem;
+  font-size: 2.1rem;
   font-weight: 400;
 }
 
 .greeting p {
   margin: 0 0 1rem;
+  font-size: 1.1rem;
 }
 
 .greeting p:last-child {
@@ -273,19 +274,20 @@ a {
   top: 0;
   width: 3.75rem;
   font-weight: 700;
-  font-size: 1rem;
+  font-size: 1.15rem;
   color: var(--pink-deep);
 }
 
 .timeline h4 {
   margin: 0 0 0.35rem;
-  font-size: 1.1rem;
+  font-size: 1.36rem;
   color: var(--green-deep);
 }
 
 .timeline p {
   margin: 0;
-  font-size: 0.98rem;
+  font-size: 1.14rem;
+  line-height: 1.5;
 }
 
 /* --- Countdown --- */
@@ -429,9 +431,18 @@ a {
 }
 
 .peony {
-  width: 42px;
-  height: 42px;
+  width: 52px;
+  height: 52px;
   flex-shrink: 0;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.peony--pink {
+  transform: rotate(-8deg);
+}
+
+.peony--green {
+  transform: translateY(-2px);
 }
 
 @media (min-width: 520px) {
