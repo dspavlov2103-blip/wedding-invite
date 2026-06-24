@@ -78,15 +78,55 @@ function safeJoinPublic(urlPath) {
 }
 
 function contentTypeFor(filePath) {
-  const ext = path.extname(filePath).toLowerCase();
-  if (ext === ".html") return "text/html; charset=utf-8";
-  if (ext === ".css") return "text/css; charset=utf-8";
-  if (ext === ".js") return "text/javascript; charset=utf-8";
-  if (ext === ".png") return "image/png";
-  if (ext === ".jpg" || ext === ".jpeg") return "image/jpeg";
-  if (ext === ".svg") return "image/svg+xml; charset=utf-8";
-  if (ext === ".mp3") return "audio/mpeg";
+  const lower = filePath.toLowerCase();
+  if (lower.endsWith(".html")) return "text/html; charset=utf-8";
+  if (lower.endsWith(".css")) return "text/css; charset=utf-8";
+  if (lower.endsWith(".js")) return "text/javascript; charset=utf-8";
+  if (lower.endsWith(".png")) return "image/png";
+  if (lower.endsWith(".jpg") || lower.endsWith(".jpeg")) return "image/jpeg";
+  if (lower.endsWith(".svg")) return "image/svg+xml; charset=utf-8";
+  if (lower.includes(".mp3")) return "audio/mpeg";
   return "application/octet-stream";
+}
+
+/** iOS/Android требуют Accept-Ranges и ответ 206 для <audio> */
+function serveStaticFile(req, res, filePath) {
+  const stat = fs.statSync(filePath);
+  const total = stat.size;
+  const type = contentTypeFor(filePath);
+  const range = req.headers.range;
+
+  if (range) {
+    const m = /^bytes=(\d*)-(\d*)$/.exec(range);
+    if (!m) {
+      res.writeHead(416, { "Content-Range": `bytes */${total}` });
+      return res.end();
+    }
+    let start = m[1] ? parseInt(m[1], 10) : 0;
+    let end = m[2] ? parseInt(m[2], 10) : total - 1;
+    if (Number.isNaN(start) || Number.isNaN(end) || start > end || start >= total) {
+      res.writeHead(416, { "Content-Range": `bytes */${total}` });
+      return res.end();
+    }
+    end = Math.min(end, total - 1);
+    const chunk = end - start + 1;
+    res.writeHead(206, {
+      "Content-Range": `bytes ${start}-${end}/${total}`,
+      "Accept-Ranges": "bytes",
+      "Content-Length": chunk,
+      "Content-Type": type,
+      "Cache-Control": "public, max-age=86400",
+    });
+    return fs.createReadStream(filePath, { start, end }).pipe(res);
+  }
+
+  res.writeHead(200, {
+    "Content-Type": type,
+    "Content-Length": total,
+    "Accept-Ranges": "bytes",
+    "Cache-Control": type.startsWith("audio/") ? "public, max-age=86400" : "no-store",
+  });
+  return fs.createReadStream(filePath).pipe(res);
 }
 
 function readAllResponses() {
@@ -156,9 +196,7 @@ const server = http.createServer(async (req, res) => {
       res.writeHead(404, { "Content-Type": "text/plain; charset=utf-8" });
       return res.end("Not Found");
     }
-    const buf = fs.readFileSync(filePath);
-    res.writeHead(200, { "Content-Type": contentTypeFor(filePath), "Cache-Control": "no-store" });
-    return res.end(buf);
+    return serveStaticFile(req, res, filePath);
   } catch (e) {
     if (e?.message === "payload_too_large") return sendJson(res, 413, { ok: false, error: "Слишком большой запрос" });
     if (e?.message === "invalid_json") return sendJson(res, 400, { ok: false, error: "Некорректный JSON" });

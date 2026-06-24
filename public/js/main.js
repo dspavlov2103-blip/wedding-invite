@@ -47,29 +47,17 @@
   const musicBtn = document.getElementById("music-toggle");
   const musicLabel = document.getElementById("music-label");
   const musicHelp = document.getElementById("music-help");
+  const MUSIC_SRC = "/audio/na-beregu-neba-instrumental.mp3";
   let musicOn = false;
-  let audioUnlocked = false;
 
-  async function unlockAudio() {
-    if (!audio || audioUnlocked) return;
-    try {
-      const prevVolume = audio.volume;
-      audio.volume = 0;
-      await audio.play();
-      audio.pause();
-      audio.currentTime = 0;
-      audio.volume = prevVolume;
-      audioUnlocked = true;
-    } catch {
-      // ignore - some in-app browsers reject this pre-unlock.
-    }
+  if (audio) {
+    audio.src = MUSIC_SRC;
+    audio.setAttribute("playsinline", "");
+    audio.setAttribute("webkit-playsinline", "");
+    audio.load();
   }
 
-  ["touchstart", "pointerdown", "keydown"].forEach((eventName) => {
-    window.addEventListener(eventName, unlockAudio, { once: true, passive: true });
-  });
-
-  musicBtn.addEventListener("click", async () => {
+  async function toggleMusic() {
     if (!audio) return;
     if (musicOn) {
       audio.pause();
@@ -79,16 +67,30 @@
       return;
     }
     try {
-      await unlockAudio();
+      if (!audio.src || !audio.src.includes("na-beregu-neba")) {
+        audio.src = MUSIC_SRC;
+        audio.load();
+      }
+      audio.muted = false;
+      audio.volume = 1;
       await audio.play();
       musicOn = true;
       musicLabel.textContent = "Выключить музыку";
       musicBtn.setAttribute("aria-pressed", "true");
       if (musicHelp) musicHelp.classList.remove("visible");
-    } catch {
+    } catch (err) {
       musicLabel.textContent = "Не удалось включить музыку";
-      if (musicHelp) musicHelp.classList.add("visible");
+      if (musicHelp) {
+        musicHelp.textContent =
+          "Нажмите кнопку ещё раз. Если не помогло — проверьте, что звук на телефоне не выключен.";
+        musicHelp.classList.add("visible");
+      }
     }
+  }
+
+  musicBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    toggleMusic();
   });
 
   const form = document.getElementById("guest-form");
