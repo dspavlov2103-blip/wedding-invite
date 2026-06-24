@@ -50,6 +50,12 @@
   const MUSIC_SRC = "/audio/na-beregu-neba-instrumental.mp3";
   let musicOn = false;
 
+  function setMusicUi(on) {
+    musicOn = on;
+    musicLabel.textContent = on ? "Выключить музыку" : "Включить музыку";
+    musicBtn.setAttribute("aria-pressed", on ? "true" : "false");
+  }
+
   if (audio) {
     audio.src = MUSIC_SRC;
     audio.setAttribute("playsinline", "");
@@ -57,15 +63,8 @@
     audio.load();
   }
 
-  async function toggleMusic() {
-    if (!audio) return;
-    if (musicOn) {
-      audio.pause();
-      musicOn = false;
-      musicLabel.textContent = "Включить музыку";
-      musicBtn.setAttribute("aria-pressed", "false");
-      return;
-    }
+  async function startMusic() {
+    if (!audio || musicOn) return musicOn;
     try {
       if (!audio.src || !audio.src.includes("na-beregu-neba")) {
         audio.src = MUSIC_SRC;
@@ -74,23 +73,49 @@
       audio.muted = false;
       audio.volume = 1;
       await audio.play();
-      musicOn = true;
-      musicLabel.textContent = "Выключить музыку";
-      musicBtn.setAttribute("aria-pressed", "true");
+      setMusicUi(true);
       if (musicHelp) musicHelp.classList.remove("visible");
-    } catch (err) {
-      musicLabel.textContent = "Не удалось включить музыку";
-      if (musicHelp) {
-        musicHelp.textContent =
-          "Нажмите кнопку ещё раз. Если не помогло — проверьте, что звук на телефоне не выключен.";
-        musicHelp.classList.add("visible");
-      }
+      return true;
+    } catch {
+      setMusicUi(false);
+      if (musicHelp) musicHelp.classList.add("visible");
+      return false;
     }
+  }
+
+  function stopMusic() {
+    if (!audio) return;
+    audio.pause();
+    setMusicUi(false);
+  }
+
+  async function toggleMusic() {
+    if (musicOn) stopMusic();
+    else await startMusic();
+  }
+
+  async function tryAutoplay() {
+    if (musicOn) return;
+    await startMusic();
   }
 
   musicBtn.addEventListener("click", (e) => {
     e.preventDefault();
     toggleMusic();
+  });
+
+  if (audio) {
+    audio.addEventListener("canplaythrough", tryAutoplay, { once: true });
+  }
+
+  // Сразу при открытии (работает на ПК и части Android)
+  tryAutoplay();
+
+  // На телефонах браузер часто разрешает звук только после касания — стартуем при первом жесте
+  ["touchstart", "pointerdown", "click", "scroll"].forEach((eventName) => {
+    window.addEventListener(eventName, () => {
+      if (!musicOn) startMusic();
+    }, { once: true, passive: true });
   });
 
   const form = document.getElementById("guest-form");

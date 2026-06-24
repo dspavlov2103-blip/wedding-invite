@@ -49,15 +49,15 @@
           <p class="frame__date">12 · 09 · 2026</p>
         </div>
 
-        <button type="button" class="music-toggle" id="music-toggle" aria-pressed="false">
+        <button type="button" class="music-toggle" id="music-toggle" aria-pressed="true">
           <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
             <path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2c0-1.77-1.02-3.29-2.5-4.03v8.06c1.48-.74 2.5-2.26 2.5-4.03z"/>
           </svg>
-          <span id="music-label">Включить музыку</span>
+          <span id="music-label">Выключить музыку</span>
         </button>
-        <audio id="bg-music" loop preload="auto" playsinline></audio>
+        <audio id="bg-music" loop preload="auto" playsinline autoplay></audio>
         <p class="music-help" id="music-help">
-          Если звук не включается во встроенном браузере ВК, откройте ссылку во внешнем браузере (Chrome/Safari).
+          Если музыка не заиграла сама, коснитесь экрана или нажмите кнопку выше.
         </p>
       </header>
 
