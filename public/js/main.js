@@ -2,8 +2,15 @@
   const cfg = window.WEDDING_CONFIG || {};
 
   const namesEl = document.getElementById("couple-names");
-  if (namesEl && cfg.names?.length) {
+  if (namesEl && cfg.names?.length >= 2) {
+    namesEl.innerHTML = `${escapeHtml(cfg.names[0])}<br />и<br />${escapeHtml(cfg.names[1])}`;
+  } else if (namesEl && cfg.names?.length) {
     namesEl.innerHTML = cfg.names.map((n) => escapeHtml(n)).join("<br />");
+  }
+
+  const venuePhoto = document.getElementById("venue-photo");
+  if (venuePhoto && cfg.venuePhoto) {
+    venuePhoto.src = cfg.venuePhoto;
   }
 
   const tgLink = document.getElementById("telegram-link");
@@ -21,6 +28,10 @@
   const weddingTarget = new Date(cfg.weddingDate || "2026-09-12T15:30:00+03:00");
   const countdownEl = document.getElementById("countdown");
 
+  function pad2(n) {
+    return String(n).padStart(2, "0");
+  }
+
   function updateCountdown() {
     const now = Date.now();
     const diff = Math.max(0, weddingTarget - now);
@@ -28,16 +39,19 @@
     const hours = Math.floor((diff % 86400000) / 3600000);
     const minutes = Math.floor((diff % 3600000) / 60000);
     const seconds = Math.floor((diff % 60000) / 1000);
-    countdownEl.innerHTML = [
-      ["days", days, "дней"],
-      ["hours", hours, "часов"],
-      ["minutes", minutes, "мин"],
-      ["seconds", seconds, "сек"],
-    ]
-      .map(
-        ([, val, label]) =>
-          `<div class="countdown__item"><span class="countdown__value">${val}</span><span class="countdown__label">${label}</span></div>`
-      )
+
+    const items = [
+      { val: days, label: "дней" },
+      { val: hours, label: "часов" },
+      { val: minutes, label: "минут" },
+      { val: seconds, label: "секунд" },
+    ];
+
+    countdownEl.innerHTML = items
+      .map((item, i) => {
+        const block = `<div class="countdown__item"><span class="countdown__value">${pad2(item.val)}</span><span class="countdown__label">${item.label}</span></div>`;
+        return i < items.length - 1 ? block + '<span class="countdown__sep" aria-hidden="true">·</span>' : block;
+      })
       .join("");
   }
   updateCountdown();
@@ -141,7 +155,8 @@
         if (entry.isIntersecting) entry.target.classList.add("visible");
       });
     },
-    { threshold: 0.12 }
+    { threshold: 0.1, rootMargin: "0px 0px -40px 0px" }
   );
-  document.querySelectorAll(".section").forEach((el) => observer.observe(el));
+
+  document.querySelectorAll(".section, .footer").forEach((el) => observer.observe(el));
 })();

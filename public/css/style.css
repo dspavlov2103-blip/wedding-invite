@@ -3,15 +3,18 @@
   --white: #ffffff;
   --pink: #dc8ea0;
   --pink-deep: #bf5f79;
+  --pink-solid: #ffd6e0;
   --green: #2f8a6f;
   --green-deep: #1f5f4b;
   --green-soft: #dbefe7;
   --pink-soft: #ffe2e8;
+  --peony-pink: #e891a5;
+  --peony-pink-light: #f5c0cc;
+  --peony-green: #5aab8a;
   --text: #2f3d37;
-  --gold: #b8956a;
   --shadow: rgba(45, 82, 72, 0.12);
   --font-serif: "Cormorant Garamond", "Times New Roman", serif;
-  --font-script: "Marck Script", cursive;
+  --font-script: "Bad Script", "Marck Script", cursive;
 }
 
 *,
@@ -49,10 +52,16 @@ a {
   overflow-x: hidden;
 }
 
-/* --- Hero --- */
+/* ─── Обложка на весь экран ─── */
 .hero {
   position: relative;
-  padding: 2.5rem 1.25rem 2rem;
+  min-height: 100dvh;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem 1.25rem 2.5rem;
   text-align: center;
   background:
     repeating-linear-gradient(
@@ -66,77 +75,94 @@ a {
 
 .hero__label {
   font-family: var(--font-script);
-  font-size: 1.35rem;
-  color: var(--green);
-  margin: 0 0 1rem;
+  font-size: clamp(1.4rem, 5vw, 1.85rem);
+  color: var(--green-deep);
+  margin: 0 0 1.5rem;
 }
 
 .frame {
   position: relative;
-  margin: 0 auto 1.25rem;
-  padding: 2.3rem 1.5rem 2rem;
-  max-width: 320px;
+  margin: 0 auto;
+  padding: clamp(2rem, 6vw, 3rem) clamp(1.5rem, 5vw, 2.25rem);
+  width: min(92vw, 380px);
   background: var(--white);
   border: 2px solid var(--green-deep);
-  border-radius: 42px 42px 20px 20px / 34px 34px 20px 20px;
-  box-shadow: 0 12px 30px var(--shadow);
-  outline: 2px solid rgba(191, 95, 121, 0.32);
-  outline-offset: -10px;
-}
-
-.frame::before,
-.frame::after {
-  content: "";
-  position: absolute;
-  width: 56px;
-  height: 56px;
-  border: 2px solid var(--pink-deep);
-  opacity: 0.5;
-  border-radius: 50%;
-  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0));
-}
-
-.frame::before {
-  top: 16px;
-  left: 12px;
-}
-
-.frame::after {
-  bottom: 16px;
-  right: 12px;
+  border-radius: 48px 48px 24px 24px / 40px 40px 24px 24px;
+  box-shadow: 0 16px 40px var(--shadow);
+  outline: 2px solid rgba(191, 95, 121, 0.35);
+  outline-offset: -12px;
 }
 
 .frame__peonies {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
-  margin-bottom: 0.75rem;
+  align-items: flex-end;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
 }
 
 .frame__names {
   margin: 0;
-  font-size: clamp(1.75rem, 7vw, 2.25rem);
-  font-weight: 600;
-  letter-spacing: 0.06em;
+  font-family: var(--font-serif);
+  font-size: clamp(2rem, 9vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: 0.05em;
   color: var(--green-deep);
-  line-height: 1.2;
+  line-height: 1.15;
 }
 
 .frame__date {
-  margin: 1rem 0 0;
-  font-size: clamp(1.55rem, 6.2vw, 2.15rem);
+  margin: 1.25rem 0 0;
+  font-family: var(--font-serif);
+  font-size: clamp(1.65rem, 6.5vw, 2.35rem);
   font-weight: 700;
   color: var(--pink-deep);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.18em;
 }
 
-/* --- Sections --- */
+/* ─── Пионовидные розы (SVG) ─── */
+.peony {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+}
+
+.peony--sm {
+  width: 44px;
+  height: 44px;
+}
+
+.peony--xs {
+  width: 36px;
+  height: 36px;
+  opacity: 0.55;
+}
+
+.peony--pink {
+  transform: rotate(-6deg);
+}
+
+.peony--green {
+  transform: translateY(-3px) rotate(4deg);
+}
+
+/* ─── Секции + анимация при скролле ─── */
 .section {
-  padding: 2.5rem 1.35rem;
+  position: relative;
+  padding: 2.75rem 1.35rem;
   background: var(--white);
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.85s ease, transform 0.85s ease;
 }
 
-.section:nth-child(even) {
+.section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section:nth-child(even):not(.section--pink) {
   background: var(--green-soft);
 }
 
@@ -151,9 +177,13 @@ a {
     );
 }
 
+.section--pink {
+  background: var(--pink-solid);
+}
+
 .section__title {
   margin: 0 0 1.25rem;
-  font-size: 1.75rem;
+  font-size: 1.85rem;
   font-weight: 600;
   text-align: center;
   color: var(--green-deep);
@@ -161,13 +191,46 @@ a {
 
 .section__title--script {
   font-family: var(--font-script);
-  font-size: 2.1rem;
+  font-size: clamp(1.9rem, 6vw, 2.35rem);
   font-weight: 400;
+  line-height: 1.3;
+}
+
+/* ─── Приветствие с цветочками ─── */
+.greeting {
+  overflow: hidden;
+}
+
+.greeting__flowers {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.greeting__flowers .peony {
+  position: absolute;
+}
+
+.greeting__flowers .peony:nth-child(1) {
+  top: 0.5rem;
+  left: 0.15rem;
+}
+
+.greeting__flowers .peony:nth-child(2) {
+  top: 2.5rem;
+  right: 0.1rem;
+}
+
+.greeting__flowers .peony:nth-child(3) {
+  bottom: 1rem;
+  left: 0.5rem;
 }
 
 .greeting p {
+  position: relative;
+  z-index: 1;
   margin: 0 0 1rem;
-  font-size: 1.1rem;
+  font-size: 1.12rem;
 }
 
 .greeting p:last-child {
@@ -192,7 +255,8 @@ a {
 
 .info-card h3 {
   margin: 0 0 0.5rem;
-  font-size: 1.15rem;
+  font-family: var(--font-script);
+  font-size: 1.35rem;
   color: var(--green-deep);
 }
 
@@ -212,25 +276,14 @@ a {
   font-size: 0.95rem;
   text-decoration: none;
   cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
+  transition: background 0.2s;
 }
 
 .btn:hover {
   background: var(--green-deep);
 }
 
-.btn--outline {
-  background: transparent;
-  color: var(--green);
-  border: 2px solid var(--green);
-}
-
-.btn--outline:hover {
-  background: var(--green);
-  color: var(--white);
-}
-
-/* --- Timeline --- */
+/* ─── Программа ─── */
 .timeline {
   list-style: none;
   margin: 0;
@@ -239,17 +292,32 @@ a {
 
 .timeline li {
   position: relative;
-  margin-bottom: 1.5rem;
-  padding-left: 4.5rem;
+  margin-bottom: 1.75rem;
+  padding-left: 5.25rem;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
+
+.section.visible .timeline li {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section.visible .timeline li:nth-child(1) { transition-delay: 0.05s; }
+.section.visible .timeline li:nth-child(2) { transition-delay: 0.15s; }
+.section.visible .timeline li:nth-child(3) { transition-delay: 0.25s; }
+.section.visible .timeline li:nth-child(4) { transition-delay: 0.35s; }
+.section.visible .timeline li:nth-child(5) { transition-delay: 0.45s; }
 
 .timeline__time {
   position: absolute;
   left: 0;
-  top: 0;
-  width: 3.75rem;
+  top: -0.1rem;
+  width: 4.75rem;
   font-weight: 700;
-  font-size: 1.15rem;
+  font-size: clamp(1.45rem, 5.5vw, 1.75rem);
+  line-height: 1.1;
   color: var(--pink-deep);
 }
 
@@ -265,43 +333,72 @@ a {
   line-height: 1.5;
 }
 
-/* --- Countdown --- */
+/* ─── Таймер (стиль «Нежность») ─── */
+.countdown-block {
+  text-align: center;
+}
+
+.countdown-block .section__title {
+  font-family: var(--font-script);
+  font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+  font-weight: 400;
+  margin-bottom: 1.75rem;
+}
+
 .countdown {
   display: flex;
   justify-content: center;
-  gap: 0.75rem;
+  align-items: flex-start;
+  gap: 0.5rem;
   flex-wrap: wrap;
-  margin-top: 1rem;
 }
 
 .countdown__item {
-  min-width: 4rem;
-  padding: 0.75rem;
+  min-width: 4.5rem;
+  padding: 0.5rem 0.25rem;
   text-align: center;
-  background: var(--white);
-  border: 2px solid var(--green);
-  border-radius: 6px;
 }
 
 .countdown__value {
   display: block;
-  font-size: 1.5rem;
-  font-weight: 700;
+  font-family: var(--font-serif);
+  font-size: clamp(2.4rem, 9vw, 3.2rem);
+  font-weight: 300;
+  line-height: 1;
   color: var(--green-deep);
+  letter-spacing: 0.02em;
 }
 
 .countdown__label {
-  font-size: 0.75rem;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  display: block;
+  margin-top: 0.45rem;
+  font-family: var(--font-script);
+  font-size: 1.05rem;
   color: var(--pink-deep);
+  text-transform: lowercase;
 }
 
-/* --- Form --- */
-.form {
-  max-width: 100%;
+.countdown__sep {
+  font-family: var(--font-serif);
+  font-size: 2rem;
+  font-weight: 300;
+  color: var(--pink);
+  line-height: 2.4rem;
+  padding: 0 0.1rem;
 }
 
+/* ─── Анкета на розовом фоне ─── */
+.section--pink .form input[type="text"],
+.section--pink .form textarea {
+  background: var(--white);
+  border-color: rgba(191, 95, 121, 0.35);
+}
+
+.section--pink .form__success {
+  background: var(--white);
+}
+
+/* ─── Форма ─── */
 .form label {
   display: block;
   margin: 1rem 0 0.35rem;
@@ -400,28 +497,30 @@ a {
   padding: 2rem 1rem 3rem;
   text-align: center;
   font-family: var(--font-script);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   color: var(--pink-deep);
   background: var(--cream);
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.85s ease, transform 0.85s ease;
 }
 
-.peony {
-  width: 52px;
-  height: 52px;
-  flex-shrink: 0;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-}
-
-.peony--pink {
-  transform: rotate(-8deg);
-}
-
-.peony--green {
-  transform: translateY(-2px);
+.footer.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 @media (min-width: 520px) {
   .page {
     max-width: 520px;
+  }
+}
+
+@media (max-width: 360px) {
+  .countdown__sep {
+    display: none;
+  }
+  .countdown {
+    gap: 0.25rem 0.75rem;
   }
 }
