@@ -155,6 +155,19 @@ a {
   height: 1.1rem;
 }
 
+.music-help {
+  margin: 0.7rem auto 0;
+  max-width: 340px;
+  font-size: 0.82rem;
+  line-height: 1.35;
+  color: #5f6a65;
+  display: none;
+}
+
+.music-help.visible {
+  display: block;
+}
+
 /* --- Sections --- */
 .section {
   padding: 2.5rem 1.35rem;

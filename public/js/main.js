@@ -46,7 +46,28 @@
   const audio = document.getElementById("bg-music");
   const musicBtn = document.getElementById("music-toggle");
   const musicLabel = document.getElementById("music-label");
+  const musicHelp = document.getElementById("music-help");
   let musicOn = false;
+  let audioUnlocked = false;
+
+  async function unlockAudio() {
+    if (!audio || audioUnlocked) return;
+    try {
+      const prevVolume = audio.volume;
+      audio.volume = 0;
+      await audio.play();
+      audio.pause();
+      audio.currentTime = 0;
+      audio.volume = prevVolume;
+      audioUnlocked = true;
+    } catch {
+      // ignore - some in-app browsers reject this pre-unlock.
+    }
+  }
+
+  ["touchstart", "pointerdown", "keydown"].forEach((eventName) => {
+    window.addEventListener(eventName, unlockAudio, { once: true, passive: true });
+  });
 
   musicBtn.addEventListener("click", async () => {
     if (!audio) return;
@@ -58,12 +79,15 @@
       return;
     }
     try {
+      await unlockAudio();
       await audio.play();
       musicOn = true;
       musicLabel.textContent = "Выключить музыку";
       musicBtn.setAttribute("aria-pressed", "true");
+      if (musicHelp) musicHelp.classList.remove("visible");
     } catch {
-      musicLabel.textContent = "Добавьте файл музыки (см. README)";
+      musicLabel.textContent = "Не удалось включить музыку";
+      if (musicHelp) musicHelp.classList.add("visible");
     }
   });
 
