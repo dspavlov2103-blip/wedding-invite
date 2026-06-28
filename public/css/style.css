@@ -13,8 +13,9 @@
   --peony-green: #5aab8a;
   --text: #2f3d37;
   --shadow: rgba(45, 82, 72, 0.12);
-  --font-serif: "Cormorant Garamond", "Times New Roman", serif;
-  --font-script: "Bad Script", "Marck Script", cursive;
+  --font-serif: "Prata", "Times New Roman", serif;
+  --font-script: "Bad Script", cursive;
+  --font-cover: "Great Vibes", cursive;
 }
 
 *,
@@ -103,40 +104,39 @@ a {
 
 .frame__names {
   margin: 0;
-  font-family: var(--font-serif);
-  font-size: clamp(2rem, 9vw, 2.75rem);
-  font-weight: 700;
-  letter-spacing: 0.05em;
+  font-family: var(--font-cover);
+  font-size: clamp(2.4rem, 10vw, 3.25rem);
+  font-weight: 400;
+  letter-spacing: 0.02em;
   color: var(--green-deep);
-  line-height: 1.15;
+  line-height: 1.1;
 }
 
 .frame__date {
   margin: 1.25rem 0 0;
-  font-family: var(--font-serif);
-  font-size: clamp(1.65rem, 6.5vw, 2.35rem);
-  font-weight: 700;
+  font-family: var(--font-cover);
+  font-size: clamp(1.85rem, 7vw, 2.6rem);
+  font-weight: 400;
   color: var(--pink-deep);
-  letter-spacing: 0.18em;
+  letter-spacing: 0.08em;
 }
 
-/* ─── Пионовидные розы (SVG) ─── */
+/* ─── Пионовидные розы (фото) ─── */
 .peony {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: auto;
   flex-shrink: 0;
-  filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.12));
+  object-fit: contain;
+  filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.14));
 }
 
 .peony--sm {
-  width: 44px;
-  height: 44px;
+  width: 52px;
 }
 
 .peony--xs {
-  width: 36px;
-  height: 36px;
-  opacity: 0.55;
+  width: 44px;
+  opacity: 0.72;
 }
 
 .peony--pink {
@@ -264,6 +264,75 @@ a {
   margin: 0.25rem 0;
 }
 
+/* ─── Вырезка календаря ─── */
+.calendar-cutout {
+  margin-top: 1.25rem;
+  padding-top: 0.5rem;
+}
+
+.calendar-cutout__month {
+  margin: 0 0 0.65rem;
+  font-family: var(--font-cover);
+  font-size: 1.65rem;
+  color: var(--pink-deep);
+  text-align: center;
+}
+
+.calendar-cutout__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border: 1.5px solid #1a1a1a;
+  background: var(--white);
+}
+
+.calendar-cutout__col {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.25rem 0.75rem;
+  min-height: 4.5rem;
+}
+
+.calendar-cutout__col + .calendar-cutout__col {
+  border-left: 1.5px solid #1a1a1a;
+}
+
+.calendar-cutout__day {
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #2a2a2a;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.calendar-cutout__date {
+  margin-top: 0.35rem;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  line-height: 1;
+}
+
+.calendar-cutout__col--wedding .calendar-cutout__date {
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-cutout__heart {
+  position: absolute;
+  left: 50%;
+  top: 58%;
+  width: 3.1rem;
+  height: auto;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.12));
+}
+
 .btn {
   display: inline-block;
   margin-top: 0.75rem;
@@ -293,7 +362,7 @@ a {
 .timeline li {
   position: relative;
   margin-bottom: 1.75rem;
-  padding-left: 5.25rem;
+  padding-left: 6.75rem;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -313,12 +382,13 @@ a {
 .timeline__time {
   position: absolute;
   left: 0;
-  top: -0.1rem;
-  width: 4.75rem;
+  top: -0.15rem;
+  width: 6.25rem;
   font-weight: 700;
-  font-size: clamp(1.45rem, 5.5vw, 1.75rem);
-  line-height: 1.1;
+  font-size: clamp(1.85rem, 7vw, 2.35rem);
+  line-height: 1;
   color: var(--pink-deep);
+  letter-spacing: -0.02em;
 }
 
 .timeline h4 {
@@ -516,7 +586,12 @@ a {
   }
 }
 
-@media (max-width: 360px) {
+@media (max-width: 380px) {
+  .calendar-cutout__day {
+    font-size: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
   .countdown__sep {
     display: none;
   }
