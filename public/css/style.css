@@ -62,9 +62,8 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 2.75rem 1.25rem 2.5rem;
+  padding: 2rem 1.25rem 2.5rem;
   text-align: center;
-  overflow: visible;
   background:
     repeating-linear-gradient(
       90deg,
@@ -85,7 +84,7 @@ a {
 .frame {
   position: relative;
   margin: 0 auto;
-  padding: clamp(2.4rem, 7vw, 3.2rem) clamp(1.5rem, 5vw, 2.25rem) clamp(2rem, 6vw, 3rem);
+  padding: clamp(2rem, 6vw, 3rem) clamp(1.5rem, 5vw, 2.25rem);
   width: min(92vw, 380px);
   background: var(--white);
   border: 2px solid var(--green-deep);
@@ -93,44 +92,17 @@ a {
   box-shadow: 0 16px 40px var(--shadow);
   outline: 2px solid rgba(191, 95, 121, 0.35);
   outline-offset: -12px;
-  overflow: visible;
 }
 
-.frame__flowers {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.frame__flowers .peony {
-  position: absolute;
-}
-
-.frame__flowers .peony--left {
-  top: -1.35rem;
-  left: -1.1rem;
-  width: clamp(4.5rem, 18vw, 5.75rem);
-  transform: rotate(-18deg) scaleX(-1);
-}
-
-.frame__flowers .peony--top {
-  top: -2rem;
-  left: 50%;
-  width: clamp(4rem, 16vw, 5.25rem);
-  transform: translateX(-50%) rotate(4deg);
-}
-
-.frame__flowers .peony--right {
-  top: -1.2rem;
-  right: -1rem;
-  width: clamp(4.5rem, 18vw, 5.75rem);
-  transform: rotate(14deg);
+.frame__peonies {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  gap: 0.2rem;
+  margin-bottom: 0.85rem;
 }
 
 .frame__names {
-  position: relative;
-  z-index: 1;
   margin: 0;
   font-family: var(--font-cover);
   font-size: clamp(2.4rem, 10vw, 3.25rem);
@@ -141,8 +113,6 @@ a {
 }
 
 .frame__date {
-  position: relative;
-  z-index: 1;
   margin: 1.25rem 0 0;
   font-family: var(--font-cover);
   font-size: clamp(1.85rem, 7vw, 2.6rem);
@@ -151,23 +121,28 @@ a {
   letter-spacing: 0.08em;
 }
 
-/* ─── Пионовидные розы (прозрачный фон) ─── */
+/* ─── Пионовидные розы (стиль Dolce Vita) ─── */
 .peony {
-  display: block;
+  width: 54px;
   height: auto;
   flex-shrink: 0;
-  object-fit: contain;
-  filter: drop-shadow(0 6px 14px rgba(80, 40, 55, 0.16));
+  display: block;
+  filter: drop-shadow(0 2px 4px rgba(45, 82, 72, 0.1));
   pointer-events: none;
   user-select: none;
 }
 
-.peony--hero {
-  opacity: 0.96;
+.peony--xs {
+  width: 38px;
+  opacity: 0.55;
 }
 
-.peony--accent {
-  opacity: 0.82;
+.peony--pink {
+  transform: rotate(-7deg);
+}
+
+.peony--green {
+  transform: translateY(-2px) rotate(5deg);
 }
 
 /* ─── Секции + анимация при скролле ─── */
@@ -221,8 +196,8 @@ a {
 
 /* ─── Приветствие с цветочками ─── */
 .greeting {
-  overflow: visible;
-  padding-top: 3.25rem;
+  overflow: hidden;
+  padding-top: 2.75rem;
 }
 
 .greeting__flowers {
@@ -235,28 +210,19 @@ a {
   position: absolute;
 }
 
-.greeting__flowers .peony--accent-1 {
-  top: -0.35rem;
-  left: -0.85rem;
-  width: clamp(4.25rem, 17vw, 5.5rem);
-  transform: rotate(-22deg) scaleX(-1);
-  opacity: 0.7;
+.greeting__flowers .peony:nth-child(1) {
+  top: 0.35rem;
+  left: 0.1rem;
 }
 
-.greeting__flowers .peony--accent-2 {
-  top: 1.25rem;
-  right: -0.75rem;
-  width: clamp(3.5rem, 14vw, 4.5rem);
-  transform: rotate(16deg);
-  opacity: 0.55;
+.greeting__flowers .peony:nth-child(2) {
+  top: 2.25rem;
+  right: 0.05rem;
 }
 
-.greeting__flowers .peony--accent-3 {
-  bottom: 0.35rem;
-  left: 0.15rem;
-  width: clamp(3rem, 12vw, 3.75rem);
-  transform: rotate(-8deg);
-  opacity: 0.45;
+.greeting__flowers .peony:nth-child(3) {
+  bottom: 0.75rem;
+  left: 0.45rem;
 }
 
 .greeting p {
