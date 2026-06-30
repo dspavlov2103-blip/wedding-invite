@@ -16,7 +16,7 @@
   --font-serif: "Prata", "Times New Roman", serif;
   --font-script: "Bad Script", cursive;
   --font-cover: "Great Vibes", cursive;
-  --heading-script-size: calc(1.35rem + 3pt);
+  --heading-script-size: calc(1.35rem + 5pt);
 }
 
 *,
@@ -78,7 +78,7 @@ a {
 
 .hero__label {
   font-family: var(--font-script);
-  font-size: clamp(1.4rem, 5vw, 1.85rem);
+  font-size: clamp(calc(1.4rem + 3pt), calc(5vw + 3pt), calc(1.85rem + 3pt));
   color: var(--green-deep);
   margin: 0 0 1.5rem;
 }
