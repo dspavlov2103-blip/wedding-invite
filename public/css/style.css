@@ -98,38 +98,18 @@ a {
 }
 
 .frame__peonies {
-  position: relative;
-  height: clamp(5.5rem, 24vw, 7.25rem);
-  margin: -0.5rem 0 0.15rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: clamp(7rem, 32vw, 10rem);
+  margin: -0.5rem 0 0.25rem;
   pointer-events: none;
 }
 
 .frame__peonies .peony {
-  position: absolute;
-  width: clamp(5.5rem, 24vw, 7.5rem);
+  width: clamp(8.5rem, 38vw, 11.5rem);
   height: auto;
-  filter: drop-shadow(0 4px 8px rgba(45, 82, 72, 0.16));
-}
-
-.frame__peonies .peony--f1 {
-  left: -1.35rem;
-  bottom: -0.35rem;
-  transform: rotate(-16deg) scaleX(-1);
-  z-index: 1;
-}
-
-.frame__peonies .peony--f2 {
-  left: 50%;
-  bottom: 0.15rem;
-  transform: translateX(-52%) rotate(4deg) scale(1.08);
-  z-index: 3;
-}
-
-.frame__peonies .peony--f3 {
-  right: -1.25rem;
-  bottom: -0.25rem;
-  transform: rotate(14deg);
-  z-index: 2;
+  filter: drop-shadow(0 4px 10px rgba(45, 82, 72, 0.18));
 }
 
 .frame__names {
