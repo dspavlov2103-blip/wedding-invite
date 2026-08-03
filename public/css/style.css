@@ -262,9 +262,14 @@ a {
 }
 
 .photo-card--greeting {
-  width: min(100%, 20rem);
-  aspect-ratio: 2 / 3;
+  width: min(100%, 24rem);
+  aspect-ratio: 3 / 2;
   margin-bottom: 1.75rem;
+}
+
+.photo-card--greeting .photo-card__image {
+  object-fit: cover;
+  object-position: center;
 }
 
 .photo-duo {
@@ -286,8 +291,14 @@ a {
 
 .photo-card--farewell {
   width: min(100%, 24rem);
-  aspect-ratio: 3 / 2;
+  aspect-ratio: auto;
   margin: 1.15rem auto 0;
+}
+
+.photo-card--farewell .photo-card__image {
+  height: auto;
+  object-fit: contain;
+  object-position: center bottom;
 }
 
 .venue-photo {
