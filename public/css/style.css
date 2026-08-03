@@ -420,7 +420,7 @@ a {
 .timeline li {
   position: relative;
   margin-bottom: 1.75rem;
-  padding-left: 6.75rem;
+  padding-left: 7.75rem;
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -442,6 +442,7 @@ a {
   left: 0;
   top: -0.15rem;
   width: 6.25rem;
+  margin-right: 1rem;
   font-weight: 700;
   font-size: clamp(1.85rem, 7vw, 2.35rem);
   line-height: 1;
