@@ -648,6 +648,14 @@ a {
   transform: translateY(0);
 }
 
+.footer__credit {
+  margin: 1rem 0 0;
+  font-family: var(--font-script);
+  font-size: clamp(1.15rem, 4.6vw, 1.45rem);
+  color: var(--green-deep);
+  letter-spacing: 0.02em;
+}
+
 @media (min-width: 520px) {
   .page {
     max-width: 520px;
